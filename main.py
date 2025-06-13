@@ -1,10 +1,13 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, filters, ContextTypes
 
-async def send_regolamento(update: Update, name=""):
-    intro = f"👋 Benvenuto {name}!
+TOKEN = "7961117862:AAEUfWZBw2F64vrmrKvYHz0CSDZYu_x1RNk"
 
-" if name else ""
+async def send_regolamento(update: Update, name=""):
+    if name:
+        intro = f"👋 Benvenuto {name}!\n\n"
+    else:
+        intro = ""
     testo = (
         "📢 *ATTENZIONE – REGOLAMENTO DEL GRUPPO* 📢\n\n"
         "🔞 Questo gruppo è *VIETATO AI MINORI.*\n\n"
@@ -26,7 +29,7 @@ async def regolamento_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     await send_regolamento(update)
 
 if __name__ == '__main__':
-    app = ApplicationBuilder().token("INSERISCI_IL_TUO_TOKEN_QUI").build()
+    app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, welcome))
     app.add_handler(CommandHandler("regolamento", regolamento_command))
     print("Bot attivo. In attesa di nuovi utenti o comandi manuali...")
